@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #f6d3f0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  height: 80dvh;
+  min-width: 250px;
+  min-height: 260px;
+  background-color: #f3ddf1;
+  border: 12px solid #ffffff;
+  border-radius: 40px;
+  padding: 5%;
+  overflow: hidden;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.card * {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.question {
+  margin: 0;
+  font-size: clamp(28px, 4.4vw, 46px);
+  color: #222;
+  max-width: 45%;
+}
+
+.image-box {
+  position: absolute;
+  top: 18%;
+  left: 38%;
+  width: 42%;
+  height: 30%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 1.6vw, 20px);
+  color: #222;
+  background: transparent;
+  overflow: hidden;
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.btn {
+  position: absolute;
+  border: 8px solid #ffffff;
+  border-radius: 12px;
+  background-color: #f6d3f0;
+  font-size: clamp(20px, 2.6vw, 30px);
+  width: 13.5%;
+  height: 12.5%;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  color: #222;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  transition: top 0.05s linear, left 0.05s linear, transform 0.15s ease-out;
+}
+
+.btn:hover,
+.btn:active {
+  transform: scale(1.1);
+}
+
+.btn-si {
+  top: 65%;
+  left: 6%;
+}
+
+.btn-no {
+  top: 65%;
+  right: 6%;
+}
+
+.puff-text {
+  position: absolute;
+  display: none;
+  font-size: clamp(14px, 1.6vw, 20px);
+  color: silver;
+  opacity: 0.6;
+  pointer-events: none;
+}

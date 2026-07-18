@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scegli giorno e orario</title>
+<link rel="stylesheet" href="../style/style.css">
+<link rel="stylesheet" href="../style/calendario.css">
+</head>
+<body>
+
+  <main class="card">
+    <div class="calendar-page">
+      <div class="calendar-row">
+        <div class="calendar">
+          <div class="calendar-header">
+            <button type="button" class="cal-nav" id="prevMonth" aria-label="Mese precedente">‹</button>
+            <span class="calendar-title" id="calendarTitle"></span>
+            <button type="button" class="cal-nav" id="nextMonth" aria-label="Mese successivo">›</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span>
+          </div>
+          <div class="calendar-days" id="calendarDays"></div>
+        </div>
+
+        <div class="calendar-side">
+          <img src="../../img/yee-removebg-preview.png" alt="" class="calendar-side-image">
+        </div>
+      </div>
+
+      <div class="time-picker">
+        <p class="time-label">Orario</p>
+        <div class="time-field">
+          <div class="time-segment">
+            <button type="button" class="time-arrow" data-unit="hour" data-dir="1" aria-label="Ora successiva">▲</button>
+            <span class="time-value" id="hourValue">19</span>
+            <button type="button" class="time-arrow" data-unit="hour" data-dir="-1" aria-label="Ora precedente">▼</button>
+          </div>
+          <span class="time-separator">:</span>
+          <div class="time-segment">
+            <button type="button" class="time-arrow" data-unit="minute" data-dir="1" aria-label="Minuti successivi">▲</button>
+            <span class="time-value" id="minuteValue">00</span>
+            <button type="button" class="time-arrow" data-unit="minute" data-dir="-1" aria-label="Minuti precedenti">▼</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/calendario.js"></script>
+  <script src="../js/animations.js"></script>
+</body>
+</html>
