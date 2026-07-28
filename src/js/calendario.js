@@ -132,7 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ appointmentType, date, time })
       });
 
-      if (!response.ok) throw new Error('Invio fallito');
+      if (!response.ok) {
+        const bodyText = await response.text().catch(() => '');
+        const detail = bodyText && !bodyText.trimStart().startsWith('<')
+          ? bodyText.slice(0, 120)
+          : `errore ${response.status}`;
+        throw new Error(detail);
+      }
 
       submitBtn.textContent = 'Inviato ✔';
       submitStatus.textContent = 'Fatto! Ti risponderò presto 💌';
@@ -140,7 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Invia 💌';
-      submitStatus.textContent = 'Invio non riuscito, riprova.';
+      const reason = err instanceof TypeError ? 'connessione assente' : err.message;
+      submitStatus.textContent = `Invio non riuscito (${reason}), riprova.`;
     }
   });
 

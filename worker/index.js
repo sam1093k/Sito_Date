@@ -43,7 +43,12 @@ async function handleSendAppointment(request, env) {
   );
 
   if (!telegramRes.ok) {
-    return new Response("Errore nell'invio a Telegram", { status: 502 });
+    let detail = '';
+    try {
+      const data = await telegramRes.json();
+      if (data && data.description) detail = `: ${data.description}`;
+    } catch {}
+    return new Response(`Errore nell'invio a Telegram${detail}`, { status: 502 });
   }
 
   return new Response('OK', { status: 200 });
