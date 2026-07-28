@@ -107,5 +107,42 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   });
 
+  const submitBtn = document.getElementById('submitBtn');
+  const submitStatus = document.getElementById('submitStatus');
+  const SEND_ENDPOINT = '/api/send-appointment';
+
+  submitBtn.addEventListener('click', async () => {
+    if (!selectedCell) {
+      submitStatus.textContent = 'Scegli prima un giorno dal calendario 📅';
+      return;
+    }
+
+    const appointmentType = sessionStorage.getItem('appointmentType') || 'Non specificato';
+    const date = `${String(selectedCell.textContent).padStart(2, '0')} ${MONTHS[viewMonth]} ${viewYear}`;
+    const time = `${hourValueEl.textContent}:${minuteValueEl.textContent}`;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Invio in corso...';
+    submitStatus.textContent = '';
+
+    try {
+      const response = await fetch(SEND_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ appointmentType, date, time })
+      });
+
+      if (!response.ok) throw new Error('Invio fallito');
+
+      submitBtn.textContent = 'Inviato ✔';
+      submitStatus.textContent = 'Fatto! Ti risponderò presto 💌';
+      sessionStorage.removeItem('appointmentType');
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Invia 💌';
+      submitStatus.textContent = 'Invio non riuscito, riprova.';
+    }
+  });
+
   render();
 });

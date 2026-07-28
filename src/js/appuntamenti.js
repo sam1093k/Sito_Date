@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   optionButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
+      sessionStorage.setItem('appointmentType', btn.textContent.trim());
       window.location.href = 'calendario.html';
     });
   });

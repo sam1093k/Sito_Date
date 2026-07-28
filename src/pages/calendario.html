@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <main class="card">
+  <main class="card calendar-card">
     <div class="calendar-page">
       <div class="calendar-row">
         <div class="calendar">
@@ -44,6 +44,11 @@
             <button type="button" class="time-arrow" data-unit="minute" data-dir="-1" aria-label="Minuti precedenti">▼</button>
           </div>
         </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="button" class="option-btn" id="submitBtn">Invia 💌</button>
+        <p class="submit-status" id="submitStatus" aria-live="polite"></p>
       </div>
     </div>
   </main>

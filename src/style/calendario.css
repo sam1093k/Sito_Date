@@ -1,15 +1,39 @@
+.calendar-card {
+  height: 95vh;
+  height: 95dvh;
+}
+
 .calendar-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  justify-content: safe center;
   height: 100%;
-  gap: 6%;
+  gap: 1%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 4px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 85, 143, 0.45) transparent;
+}
+
+.calendar-page::-webkit-scrollbar {
+  width: 6px;
+}
+
+.calendar-page::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.calendar-page::-webkit-scrollbar-thumb {
+  background-color: rgba(168, 85, 143, 0.45);
+  border-radius: 999px;
 }
 
 .calendar-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 420px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(340px, 33vh)) minmax(0, 1fr);
   align-items: center;
   width: 100%;
   gap: 4%;
@@ -31,7 +55,7 @@
 
 .calendar-side-image {
   max-width: 100%;
-  max-height: 240px;
+  max-height: min(240px, 26vh);
   object-fit: contain;
 }
 
@@ -39,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 .cal-nav {
@@ -48,8 +72,9 @@
   border-radius: 8px;
   width: 2.2em;
   height: 2.2em;
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: clamp(14px, 2.2vh, 22px);
   line-height: 1;
+  flex: none;
   cursor: pointer;
   color: #222;
   display: flex;
@@ -64,9 +89,12 @@
 }
 
 .calendar-title {
-  font-size: clamp(18px, 2.4vw, 26px);
+  font-size: clamp(14px, 2.6vh, 26px);
   color: #222;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .calendar-weekdays {
@@ -75,13 +103,13 @@
   text-align: center;
   font-size: clamp(12px, 1.4vw, 16px);
   opacity: 0.7;
-  margin-bottom: 3%;
+  margin-bottom: 1%;
 }
 
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 2px;
 }
 
 .day-cell {
@@ -120,11 +148,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4%;
+  gap: 1%;
 }
 
 .time-label {
-  font-size: clamp(14px, 1.8vw, 20px);
+  font-size: clamp(13px, 1.8vw, 18px);
   color: #222;
 }
 
@@ -133,7 +161,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding: 0.7em 1.6em;
+  padding: 0.15em 1.2em;
   background-color: #f3ddf1;
   border-radius: 22px;
 }
@@ -168,7 +196,7 @@
   display: inline-block;
   min-width: 1.3em;
   text-align: center;
-  font-size: clamp(30px, 3.8vw, 42px);
+  font-size: clamp(20px, 3vh, 42px);
   letter-spacing: 1px;
   color: #222;
 }
@@ -184,7 +212,23 @@
 }
 
 .time-separator {
-  font-size: clamp(30px, 3.8vw, 42px);
+  font-size: clamp(20px, 3vh, 42px);
   color: #222;
   transform: translateY(-6px);
+}
+
+.submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.submit-status {
+  margin: 0;
+  min-height: 1.1em;
+  font-size: clamp(12px, 1.6vw, 15px);
+  color: #222;
+  text-align: center;
 }

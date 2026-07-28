@@ -40,31 +40,3 @@
   max-height: 100%;
   object-fit: contain;
 }
-
-.option-btn {
-  width: 100%;
-  max-width: 280px;
-  height: clamp(50px, 7vh, 74px);
-  padding: 0.4em 1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(15px, 1.8vw, 22px);
-  border: 6px solid #ffffff;
-  border-radius: 12px;
-  background-color: #f6d3f0;
-  color: #222;
-  cursor: pointer;
-  text-align: center;
-  line-height: 1.15;
-  transition: transform 0.15s ease-out;
-}
-
-.option-btn:hover,
-.option-btn:active {
-  transform: scale(1.1);
-}
-
-.option-btn--small-text {
-  font-size: clamp(11px, 1.3vw, 16px);
-}
