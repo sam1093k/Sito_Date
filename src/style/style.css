@@ -37,16 +37,22 @@ body {
   animation: heart-rise linear infinite;
 }
 
-.bg-hearts span:nth-child(1)  { left: 2%;  font-size: 22px; animation-duration: 19s; animation-delay: 0s; }
-.bg-hearts span:nth-child(2)  { left: 6%;  font-size: 14px; animation-duration: 24s; animation-delay: 8s; color: #d17fb5; }
-.bg-hearts span:nth-child(3)  { left: 9%;  font-size: 18px; animation-duration: 21s; animation-delay: 14s; }
-.bg-hearts span:nth-child(4)  { left: 20%; font-size: 15px; animation-duration: 26s; animation-delay: 4s;  color: #eba7d4; }
-.bg-hearts span:nth-child(5)  { left: 36%; font-size: 20px; animation-duration: 22s; animation-delay: 11s; }
-.bg-hearts span:nth-child(6)  { left: 55%; font-size: 14px; animation-duration: 25s; animation-delay: 1s;  color: #d17fb5; }
-.bg-hearts span:nth-child(7)  { left: 72%; font-size: 17px; animation-duration: 23s; animation-delay: 17s; }
-.bg-hearts span:nth-child(8)  { left: 90%; font-size: 24px; animation-duration: 19s; animation-delay: 6s; }
-.bg-hearts span:nth-child(9)  { left: 94%; font-size: 15px; animation-duration: 24s; animation-delay: 12s; color: #eba7d4; }
-.bg-hearts span:nth-child(10) { left: 97%; font-size: 19px; animation-duration: 21s; animation-delay: 3s; }
+.bg-hearts span:nth-child(1)  { left: 2%;  font-size: 30px; animation-duration: 19s; animation-delay: 0s; }
+.bg-hearts span:nth-child(2)  { left: 5%;  font-size: 20px; animation-duration: 24s; animation-delay: 8s; color: #d17fb5; }
+.bg-hearts span:nth-child(3)  { left: 8%;  font-size: 26px; animation-duration: 21s; animation-delay: 14s; }
+.bg-hearts span:nth-child(4)  { left: 12%; font-size: 18px; animation-duration: 25s; animation-delay: 5s;  color: #eba7d4; }
+.bg-hearts span:nth-child(5)  { left: 15%; font-size: 36px; animation-duration: 21s; animation-delay: 18s; }
+.bg-hearts span:nth-child(6)  { left: 25%; font-size: 22px; animation-duration: 23s; animation-delay: 10s; }
+.bg-hearts span:nth-child(7)  { left: 38%; font-size: 28px; animation-duration: 20s; animation-delay: 2s;  color: #d17fb5; }
+.bg-hearts span:nth-child(8)  { left: 45%; font-size: 25px; animation-duration: 24s; animation-delay: 6s;  color: #d17fb5; }
+.bg-hearts span:nth-child(9)  { left: 50%; font-size: 19px; animation-duration: 26s; animation-delay: 16s; }
+.bg-hearts span:nth-child(10) { left: 62%; font-size: 24px; animation-duration: 22s; animation-delay: 7s;  color: #eba7d4; }
+.bg-hearts span:nth-child(11) { left: 75%; font-size: 20px; animation-duration: 24s; animation-delay: 12s; }
+.bg-hearts span:nth-child(12) { left: 85%; font-size: 30px; animation-duration: 22s; animation-delay: 15s; }
+.bg-hearts span:nth-child(13) { left: 88%; font-size: 27px; animation-duration: 20s; animation-delay: 4s;  color: #d17fb5; }
+.bg-hearts span:nth-child(14) { left: 92%; font-size: 21px; animation-duration: 23s; animation-delay: 9s; }
+.bg-hearts span:nth-child(15) { left: 95%; font-size: 33px; animation-duration: 18s; animation-delay: 1s; }
+.bg-hearts span:nth-child(16) { left: 97%; font-size: 18px; animation-duration: 25s; animation-delay: 13s; color: #eba7d4; }
 
 @keyframes heart-rise {
   0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
