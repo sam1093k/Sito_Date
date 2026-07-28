@@ -1,0 +1,10 @@
+wrangler.jsonc
+worker/
+.dev.vars
+.dev.vars.*
+.gitignore
+.assetsignore
+README.md
+.git/
+.claude/
+.wrangler/

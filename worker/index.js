@@ -1,12 +1,12 @@
-// Cloudflare Pages Function — POST /api/send-appointment
-// Fa da proxy verso l'API di Telegram così il bot token resta segreto
-// (letto da env, mai spedito al browser) invece di stare nel JS pubblico.
+// Worker Cloudflare — gestisce POST /api/send-appointment e serve il sito
+// statico per tutte le altre richieste. Fa da proxy verso l'API di Telegram
+// cosi' il bot token resta segreto (letto da env, mai spedito al browser).
 
 function isValidField(value) {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= 60;
 }
 
-export async function onRequestPost({ request, env }) {
+async function handleSendAppointment(request, env) {
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
     return new Response('Server non configurato', { status: 500 });
   }
@@ -43,8 +43,20 @@ export async function onRequestPost({ request, env }) {
   );
 
   if (!telegramRes.ok) {
-    return new Response('Errore nell\'invio a Telegram', { status: 502 });
+    return new Response("Errore nell'invio a Telegram", { status: 502 });
   }
 
   return new Response('OK', { status: 200 });
 }
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/api/send-appointment' && request.method === 'POST') {
+      return handleSendAppointment(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  }
+};

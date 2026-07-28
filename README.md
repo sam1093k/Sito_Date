@@ -6,9 +6,10 @@ Piccolo sito statico (HTML/CSS/JS puro, nessuna dipendenza o build) per chiedere
 
 ```
 index.html                   Pagina 1: la domanda, con il pulsante "NO" che scappa dal mouse
-functions/
-  api/
-    send-appointment.js      Funzione serverless (Cloudflare Pages Functions): inoltra il messaggio al bot Telegram tenendo il token segreto
+worker/
+  index.js                  Cloudflare Worker: serve il sito statico + POST /api/send-appointment (inoltra il messaggio al bot Telegram tenendo il token segreto)
+wrangler.jsonc                Configurazione del Worker (nome progetto, file statici, routing)
+.assetsignore                 File tecnici da non pubblicare come asset statici (wrangler.jsonc, worker/, ecc.)
 src/
   pages/
     appuntamenti.html        Pagina 2: scelta del tipo di appuntamento
@@ -28,7 +29,7 @@ img/                          Immagini usate nel sito
 
 ## Come usarlo
 
-Nessuna build necessaria: basta aprire `index.html` in un browser, oppure servire la cartella con un qualsiasi server statico. Il pulsante "Invia 💌" nell'ultima pagina funziona però solo quando il sito è pubblicato su una piattaforma che esegue anche `functions/api/send-appointment.js` (vedi "Deploy gratuito 24/7" più sotto) — in locale, senza quella funzione attiva, mostrerà un messaggio di errore.
+Nessuna build necessaria: basta aprire `index.html` in un browser, oppure servire la cartella con un qualsiasi server statico. Il pulsante "Invia 💌" nell'ultima pagina funziona però solo quando il sito è pubblicato su Cloudflare (vedi "Deploy gratuito 24/7" più sotto) — in locale, senza il Worker attivo, mostrerà un messaggio di errore.
 
 ## Flusso
 
@@ -38,7 +39,7 @@ Nessuna build necessaria: basta aprire `index.html` in un browser, oppure servir
 
 ## Notifiche Telegram
 
-Il pulsante "Invia" chiama `POST /api/send-appointment`, che gira lato server e a sua volta chiama l'API di Telegram con un bot token letto da variabile d'ambiente. Il token **non** è mai presente nel codice che arriva al browser: se fosse scritto direttamente nel JS, chiunque visitasse il sito potrebbe leggerlo dal sorgente e usarlo per mandare messaggi a nome del bot.
+Il pulsante "Invia" chiama `POST /api/send-appointment`, gestito dal Worker in `worker/index.js`, che a sua volta chiama l'API di Telegram con un bot token letto da variabile d'ambiente. Il token **non** è mai presente nel codice che arriva al browser: se fosse scritto direttamente nel JS, chiunque visitasse il sito potrebbe leggerlo dal sorgente e usarlo per mandare messaggi a nome del bot.
 
 ### 1. Crea il bot
 
@@ -53,22 +54,23 @@ Il pulsante "Invia" chiama `POST /api/send-appointment`, che gira lato server e 
 
 ### 3. Configura le variabili d'ambiente
 
-Sulla piattaforma di hosting (es. Cloudflare Pages → Settings → Environment variables) imposta:
+Sul progetto Cloudflare (**Settings → Variables and Secrets**) imposta:
 
-- `TELEGRAM_BOT_TOKEN` — il token di BotFather (da segnare come "secret"/criptata)
+- `TELEGRAM_BOT_TOKEN` — il token di BotFather (da segnare come "Secret"/criptata)
 - `TELEGRAM_CHAT_ID` — il chat_id trovato al passo 2
 
 Per provare in locale con Wrangler, copia `.dev.vars.example` in `.dev.vars` (già ignorato da git) e mettici i valori veri.
 
 ## Deploy gratuito 24/7
 
-**Scelta consigliata: [Cloudflare Pages](https://pages.cloudflare.com/).** Gratis senza carta di credito, il sito statico non ha limiti di richieste/banda, e la funzione in `functions/api/` (che parla con Telegram) gira su Cloudflare Workers con 100.000 richieste/giorno gratuite — enormemente più del necessario per un sito personale come questo. A differenza di molti host "free" per backend (es. Render, che sospende il servizio dopo ~15 minuti di inattività e impiega circa un minuto a ripartire alla richiesta successiva), qui non c'è alcuno "spin down": il sito risponde sempre all'istante, il che conta per un sito pensato per essere aperto una volta da una persona sola.
+**Scelta consigliata: Cloudflare** (progetto **Workers**, con gli "static assets" per servire il sito). Gratis senza carta di credito, il sito statico non ha limiti di richieste/banda, e il Worker che parla con Telegram ha 100.000 richieste/giorno gratuite — enormemente più del necessario per un sito personale come questo. A differenza di molti host "free" per backend (es. Render, che sospende il servizio dopo ~15 minuti di inattività e impiega circa un minuto a ripartire alla richiesta successiva), qui non c'è alcuno "spin down": il sito risponde sempre all'istante, il che conta per un sito pensato per essere aperto una volta da una persona sola.
 
 Passi:
 
-1. Carica il progetto su GitHub.
-2. Su [pages.cloudflare.com](https://pages.cloudflare.com) collega la repo. Non serve alcun comando di build (sito statico): lascia vuoto "Build command" e imposta `/` come "Build output directory". Cloudflare rileva da solo la cartella `functions/`.
-3. In **Settings → Environment variables** aggiungi `TELEGRAM_BOT_TOKEN` e `TELEGRAM_CHAT_ID` come al punto sopra.
-4. Deploy: il sito è online su un dominio gratuito `*.pages.dev` (un dominio personalizzato si può collegare in seguito, sempre gratis).
+1. Carica il progetto su GitHub (`wrangler.jsonc` e `worker/` compresi: servono al deploy).
+2. Su [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → **Import a repository**, collega la repo.
+3. Lascia "Build command" vuoto e "Deploy command" com'è (`npx wrangler deploy`); il nome progetto deve corrispondere a `name` in `wrangler.jsonc` (`sito-date`).
+4. Fai il primo deploy, poi vai in **Settings → Variables and Secrets** e aggiungi `TELEGRAM_BOT_TOKEN` e `TELEGRAM_CHAT_ID` come al punto sopra, quindi rilancia il deploy perché siano applicate.
+5. Il sito è online su un dominio gratuito `*.workers.dev` (un dominio personalizzato si può collegare in seguito, sempre gratis).
 
 Alternative valide, entrambe con funzioni serverless gratuite: **Netlify** (Netlify Functions; piccoli "cold start" di qualche centinaio di ms sulle funzioni, ma nessuno spin-down del sito) o **Vercel**. Da evitare per questo progetto: piattaforme che addormentano il servizio dopo un periodo di inattività (es. piano free di Render) o che non offrono più un piano gratuito continuativo (es. Railway, che dal 2023 dà solo credito di prova una tantum, o Heroku, che non ha più piano free dal 2022) — con queste il pulsante "Invia" rischierebbe di chiamare un backend addormentato o assente.
